@@ -66,17 +66,7 @@ sql_leetcode/
 - Build a comprehensive portfolio of SQL solutions
 - Prepare for data science and analytics interviews
 
-## 📈 Weekly Progress Chart
 
-```
-Week 1: ████████████████████░░ 80%
-Week 2: ██████████████░░░░░░░░ 60%
-Week 3: ████████████████░░░░░░ 70%
-Week 4: ███████████████████░░░ 75%
-Week 5: ██████████████████████ 90%
-Week 6: ████████░░░░░░░░░░░░░░ 40%
-Week 7: ██████████████████░░░░ 80%
-```
 
 ## 🎯 SQL Interview Tips
 
@@ -92,18 +82,7 @@ Have suggestions or alternative solutions? Feel free to open an issue or submit 
 
 Let's learn and grow together in our SQL journey! 💪
 
-<div align="center">
-  
-[![GitHub stars](https://img.shields.io/github/stars/your-username/sql_leetcode?style=social)](https://github.com/your-username/sql_leetcode)
-[![GitHub forks](https://img.shields.io/github/forks/your-username/sql_leetcode?style=social)](https://github.com/your-username/sql_leetcode/fork)
-[![GitHub watchers](https://img.shields.io/github/watchers/your-username/sql_leetcode?style=social)](https://github.com/your-username/sql_leetcode)
 
-</div>
-
----
-
-<div align="center">
-  <img src="https://komarev.com/ghpvc/?username=your-username&color=ff69b4&style=flat-square&label=Repository+Views" alt="Repository views counter"/>
   
   <h3>✨ Happy SQL Coding! ✨</h3>
 </div>
