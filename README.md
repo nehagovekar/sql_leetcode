@@ -6,7 +6,7 @@
 
 [![Leetcode Profile](https://img.shields.io/badge/LeetCode-Profile-FFA116?style=for-the-badge&logo=leetcode&logoColor=black)](https://leetcode.com/your-username/)
 [![Days](https://img.shields.io/badge/50_Days-SQL_Journey-9cf?style=for-the-badge)](https://github.com/your-username/sql_leetcode)
-[![Problems](https://img.shields.io/badge/Problems_Solved-0/50-ff69b4?style=for-the-badge)](https://github.com/your-username/sql_leetcode)
+[![Problems](https://img.shields.io/badge/Problems_Solved-4/50-ff69b4?style=for-the-badge)](https://github.com/your-username/sql_leetcode)
 
 </div>
 
