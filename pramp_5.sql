@@ -29,3 +29,13 @@ FROM citizen
 GROUP BY citizen_id
 ORDER BY average_age ASC
 LIMIT 3;
+/*
+Write a SQL query to identify the state that has gained the most citizens in the last 30 days, 
+ordered by state_id. Output columns: state_id, citizen_growth
+*/
+SELECT n.state_id, COUNT(cnh.move_in_date) as citizen_growth FROM citizen_neighborhood_history cnh
+JOIN neighborhood n 
+ON cnh.neighborhood_id = n.neighborhood_id
+WHERE move_in_date >= CURRENT_DATE - INTERVAL '30 days'
+GROUP BY n.state_id
+ORDER BY n.state_id;
