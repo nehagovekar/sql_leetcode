@@ -116,3 +116,22 @@ zip_code	avg_trip_time
 Footer
 
 */
+WITH selected_users AS
+(
+  SELECT user_id, signup_dt FROM google_maps_users
+  WHERE signup_dt > date '2021-01-01'
+),
+start_end_trip AS
+(SELECT su.user_id, gmt.creation_dt, gmt.event_type, gml.zip_code,
+  LAG(gmt.creation_dt) OVER (PARTITION BY su.user_id ORDER BY gmt.creation_dt) AS prev_date,
+  LAG(gmt.event_type) OVER (PARTITION BY su.user_id ORDER BY gmt.creation_dt) AS prev_event
+  FROM selected_users su 
+  JOIN google_maps_trips gmt ON gmt.user_id=su.user_id
+  JOIN google_maps_locations gml ON gmt.location_id=gml.location_id
+  )
+
+SELECT zip_code, ROUND(AVG(datediff('minute',prev_date, creation_dt)),2) AS avg_trip_time FROM 
+   start_end_trip 
+  WHERE event_type='end trip' and prev_event='start trip' 
+  GROUP BY zip_code
+  ORDER BY zip_code;
