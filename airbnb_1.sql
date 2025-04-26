@@ -37,3 +37,7 @@ location_country	varchar
 first_listed_on	date
 
 */
+SELECT property_id FROM airbnb_dim_property
+ where total_sqft='3000+'
+  ORDER BY property_id ASC
+  LIMIT 5;
