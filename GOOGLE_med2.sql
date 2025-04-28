@@ -79,3 +79,15 @@ zip_code	count_of_trips
 Footer
 
 */
+with locations as (select location_id, count(location_id) as cnt from google_maps_trips where event_type='end trip'
+  GROUP BY location_id
+  ORDER BY cnt DESC
+  limit 5)
+SELECT gml.zip_code, gmt.cnt as count_of_trips
+FROM google_maps_locations gml 
+JOIN locations gmt 
+ON gml.location_id= gmt.location_id
+  ORDER BY 2 DESC,1 ASC
+  LIMIT 3;
+ 
+ 
