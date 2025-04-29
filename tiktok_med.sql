@@ -49,3 +49,9 @@ first_used_date	timestamp
 day7reach	bigint
 
 */
+SELECT tfs.sound_name as sound_name, ROUND(avg(tfv.viewed_to_completion)*100,2) as full_view_rate FROM 
+  tiktok_dim_sounds tfs 
+  JOIN tiktok_fct_views tfv
+  ON tfs.sound_id= tfv.sound_id
+  GROUP BY tfs.sound_name
+  ORDER BY full_view_rate DESC, 1 ASC;
