@@ -54,3 +54,4 @@ airport_dropoff_rate
 Footer
 
 */
+SELECT ROUND(COUNT(CASE WHEN destination_type='Airport' then 1 else null END)/COUNT(*)*100,2) AS airport_dropoff_rate from uber_fct_trips;
