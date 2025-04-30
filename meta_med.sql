@@ -30,3 +30,12 @@ metric_value	double
 is_internal_acc	bigint
 double_exposure	bigint
 */
+SELECT test_name,
+ROUND(AVG(CASE WHEN treatment_group='Control' then (metric_value) else 0 END),2) as control_metric,
+ ROUND(AVG(CASE WHEN treatment_group='Test' then (metric_value) else 0 END),2) as test_metric,
+ ROUND((test_metric-control_metric),2) as delta_chg
+  FROM ab_exp_results
+  WHERE is_internal_acc=0
+  and double_exposure=0
+  GROUP BY test_name 
+  ORDER BY test_name ASC;
