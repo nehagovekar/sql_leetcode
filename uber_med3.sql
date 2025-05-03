@@ -75,3 +75,20 @@ is_verified	boolean
 requires_accomodations	bigint
 
 */
+WITH username AS
+  (
+  SELECT CONCAT(udm.first_name,' ', udm.last_name) AS user_name,
+ trip_miles FROM
+   uber_fct_trips uft 
+  JOIN uber_dim_users udm 
+  ON udm.user_id = uft.rider_id
+  ),
+   ranking as (
+SELECT u.user_name,
+  u.trip_miles,
+  DENSE_RANK() OVER (PARTITION BY u.user_name ORDER BY u.trip_miles DESC) AS trip_rnk FROM username u
+  )
+SELECT * FROM ranking 
+WHERE trip_rnk=1 
+ORDER BY user_name ASC;
+
