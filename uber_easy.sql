@@ -28,3 +28,14 @@ creation_dt	timestamp
 event_type	varchar
 
 */
+SELECT  event_type, COUNT(event_id) as ride_counts,
+  date_trunc('day', max(creation_dt)) event_datetime
+  FROM google_maps_actions  WHERE creation_dt> '2022-04-01'
+  GROUP BY 1
+  ORDER BY 1 ASC;
+
+
+--AFTER APRIL 1 2022-->WHERE
+--MAX DATE
+-- TOTAL COUNT OF RIDE
+--remember date_trunct ('day')
