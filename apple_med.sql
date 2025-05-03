@@ -77,3 +77,17 @@ price	double
 device	varchar
 rating	double
 */
+WITH imputed_rating AS
+(
+  SELECT  app_name,
+  COALESCE(ROUND(AVG(rating),2),0.00) as rating_imputed
+  FROM appstore_transactions
+  GROUP BY app_name
+)
+select at.user_id, ir.app_name, COALESCE(at.rating,ir.rating_imputed) as rating_imputed
+  from
+  appstore_transactions at 
+  JOIN 
+  imputed_rating ir 
+  ON at.app_name = ir.app_name
+  ORDER BY ir.app_name asc;
