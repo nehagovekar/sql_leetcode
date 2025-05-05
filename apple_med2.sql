@@ -36,3 +36,16 @@ device	varchar
 rating	double
 
 */
+WITH filtered AS(SELECT DATE_TRUNC('days', transaction_dt) as transaction_date ,
+  app_name, 
+  RANK() OVER (PARTITION BY transaction_date ORDER BY price DESC) as rnk
+  FROM appstore_transactions
+  WHERE transaction_dt between '2022-03-01' and '2022-03-08'
+
+)
+SELECT transaction_date, app_name
+FROM filtered
+WHERE rnk=1
+ORDER BY transaction_date ASC, app_name ASC;
+
+
