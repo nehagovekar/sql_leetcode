@@ -74,3 +74,13 @@ RGray6	4
 Footer
 
 */
+with ranking as (SELECT viewer_id, COUNT(view_ts) AS total_views,
+  RANK() OVER ( ORDER BY COUNT(view_ts) desc) as rnk
+ FROM tiktok_fct_views
+  GROUP BY viewer_id)
+SELECT tdu.user_name, r.total_views
+FROM tiktok_dim_users tdu 
+JOIN RANKING r 
+ON tdu.user_id=r.viewer_id
+WHERE rnk=1
+ORDER BY tdu.user_name ASC;
