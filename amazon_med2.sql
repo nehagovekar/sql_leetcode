@@ -57,3 +57,17 @@ payment_method	varchar
 shipping_cost	double
 quantity	bigint
 */
+WITH filtered_category AS
+  (SELECT product_id,category, published_at FROM amazon_products
+  WHERE category in ('clothing','jewelry')),
+transaction_details AS
+(SELECT DISTINCT(user_id) FROM filtered_category fc
+  JOIN amazon_transactions at 
+  ON fc.product_id= at.product_id
+  GROUP BY user_id
+ )
+SELECT au.email, DATETRUNC('days',au.prime_joined_dt) as prime_joined_dt FROM amazon_users au 
+  JOIN transaction_details td 
+  ON au.user_id=td.user_id
+  WHERE au.prime_joined_dt is not null
+  ORDER BY prime_joined_dt asc, au.email ASC ;
