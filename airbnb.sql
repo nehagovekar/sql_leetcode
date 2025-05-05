@@ -26,3 +26,12 @@ price_per_night	double
 purchased_date	date
 
 */
+WITH total_nights AS
+(
+  SELECT property_id, SUM(num_of_nights) as mn
+  FROM airbnb_fct_rentals
+  GROUP BY property_id
+)
+SELECT property_id FROM total_nights
+WHERE mn = (SELECT max(mn) FROM total_nights)
+ORDER BY property_id ASC;
