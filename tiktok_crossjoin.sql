@@ -68,3 +68,17 @@ country	varchar
 suspicious_account	bigint
 
 */
+WITH overall_rate
+  AS(
+  SELECT SUM(CASE WHEN viewed_to_completion=1 THEN 1 ELSE 0 END)/COUNT(*)*100 as full_view_rate  FROM tiktok_fct_views),
+   user_population_rate AS
+  (
+  SELECT viewer_id, SUM(CASE WHEN viewed_to_completion=1 THEN 1 ELSE 0 END)/COUNT(*)*100  as viewer_rate
+  FROM tiktok_fct_views
+  GROUP BY viewer_id
+  )
+  SELECT upr.viewer_id as viewer,upr.viewer_rate as usr_full_view_rate, orr.full_view_rate, (CASE WHEN upr.viewer_rate> orr.full_view_rate THEN 'Over' ELSE 'Under' END) as full_view_type   
+   
+ FROM user_population_rate upr
+  CROSS JOIN overall_rate orr
+  ORDER BY viewer_rate DESC, upr.viewer_id ASC;
