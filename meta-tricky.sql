@@ -29,3 +29,4 @@ is_reviewed	bigint
 is_removed	bigint
 
 */
+SELECT ROUND(COUNT(DISTINCT(CASE WHEN is_removed=1 THEN post_id ELSE null END))/COUNT(DISTINCT(post_id))*100,2) as removal_rate FROM fb_reported_posts;
