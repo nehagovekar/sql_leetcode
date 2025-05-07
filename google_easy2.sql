@@ -68,3 +68,8 @@ nonprofit	0
 Footer
 
 */
+SELECT gsw.type, ROUND(COUNT(CASE WHEN event_type='clicked' THEN 1 ELSE NULL END)/COUNT(CASE WHEN event_type='viewed' THEN 1 ELSE NULL END),2) as conversion_rate FROM google_search_activity gsa 
+  JOIN google_search_websites gsw 
+  USING (website_id)
+GROUP BY gsw.type
+ORDER BY gsw.type;
