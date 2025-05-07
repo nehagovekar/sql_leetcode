@@ -25,3 +25,4 @@ banned_on	date
 is_temporary	bigint
 
 */
+SELECT ROUND(COUNT(CASE WHEN is_temporary=0 THEN 1 ELSE null END)*100/(COUNT(*)),2) as permanent_banned_prcnt FROM banned_users;
