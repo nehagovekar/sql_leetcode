@@ -35,3 +35,12 @@ url	varchar
 type	varchar
 
 */
+with most_clicked as(SELECT website_id, COUNT(CASE WHEN event_type='clicked' THEN 1 ELSE NULL END) as click_count FROM google_search_activity
+  where creation_dt between '2022-01-01' and '2022-06-01' 
+  GROUP BY website_id
+  ORDER BY click_count DESC
+  LIMIT 1)
+SELECT gsa.url, mc.click_count
+FROM google_search_websites gsa 
+JOIN most_clicked mc 
+ON gsa.website_id=mc.website_id;
