@@ -78,3 +78,16 @@ device	varchar
 rating	double
 
 */
+SELECT
+  transaction_id ,
+  user_id ,
+  app_name ,
+  transaction_dt ,
+  coalesce(payment_method, 'unknown') payment_method ,
+  price ,
+  device ,
+  rating
+from appstore_transactions
+order by
+  user_id asc,
+  transaction_dt desc
