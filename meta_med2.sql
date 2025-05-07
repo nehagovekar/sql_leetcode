@@ -31,3 +31,6 @@ metric_value	double
 is_internal_acc	bigint
 double_exposure	bigint
 */
+SELECT test_name, COUNT(CASE WHEN treatment_group='Test' THEN 1 ELSE null END) as treatment_count, COUNT(CASE WHEN treatment_group='Control' THEN 1 ELSE null END) as control_count FROM ab_exp_results
+ GROUP by test_name
+  ORDER BY test_name ASC;
