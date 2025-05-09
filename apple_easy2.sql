@@ -40,3 +40,8 @@ email	varchar
 country	varchar
 joined_dt	date
 */
+SELECT (au.email), au.joined_dt FROM 
+  apple_users au 
+WHERE au.joined_dt between '2022-01-01' and '2022-01-08' 
+  and au.user_id not in (select user_id from appstore_transactions)
+ORDER BY au.email ASC;
