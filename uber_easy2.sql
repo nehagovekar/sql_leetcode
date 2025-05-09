@@ -40,3 +40,6 @@ trip_request_at	timestamp
 service_match_time	varchar
 
 */
+SELECT ROUND(COUNT(DISTINCT(ur.trip_id))*100/COUNT(DISTINCT(uft.ride_id)),2) as ride_refund_rate FROM uber_refunds ur 
+  RIGHT JOIN uber_fct_trips uft 
+  ON ur.trip_id=uft.ride_id;
