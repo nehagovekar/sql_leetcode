@@ -92,3 +92,18 @@ LDuke9@yahoo.com
 Footer
 
 */
+with no_days as(SELECT user_id, DATEDIFF('days',start_date,end_date) as em_days,
+    RANK() OVER (PARTITION BY user_id ORDER BY start_date ASC) as rnk
+  FROM linkedin_emp_history),
+Filter_Users AS
+(
+  SELECT user_id 
+  FROM no_days
+  WHERE rnk =1 and em_days<365 
+  )
+SELECT linkedin_users.email FROM linkedin_users
+    JOIN no_days
+  ON linkedin_users.user_id=no_days.user_id
+WHERE no_days.user_id in (SELECT user_id from filter_users)
+  and no_days.rnk=2 and no_days.em_days>365
+  ORDER BY linkedin_users.email;
