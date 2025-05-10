@@ -35,3 +35,12 @@ video_id	bigint
 reaction_dt	timestamp
 reactions	varchar
 */
+with data_filtered AS (SELECT youtube_users.user_id, reactions,
+COALESCE(DATE_DIFF('days',youtube_users.signup_dt,youtube_reactions.reaction_dt),0) as days_difference
+FROM youtube_users
+JOIN youtube_reactions
+ON youtube_users.user_id= youtube_reactions.user_id
+WHERE reactions in ('like','comment'))
+  
+--SELECT COUNT(CASE WHEN days_difference<360 THEN 1 ELSE NULL END) FROM data_filtered;
+SELECT ROUND((COUNT(*)/COUNT(CASE WHEN days_difference<360 THEN 1 ELSE NULL END)),2) as reaction_rate FROM data_filtered;
