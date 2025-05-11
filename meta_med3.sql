@@ -29,3 +29,8 @@ cpc_rate	varchar
 clicked_ad	bigint
 
 */
+SELECT ad_name,
+ROUND(SUM(CASE WHEN clicked_ad=1 THEN CAST(cpc_rate AS float) ELSE NULL END),2) as ad_spend
+FROM ads_actions
+GROUP BY ad_name
+ORDER BY ad_spend desc, ad_name asc;
