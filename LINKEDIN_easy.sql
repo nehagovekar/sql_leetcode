@@ -34,3 +34,8 @@ joined_dt	date
 account_type	varchar
 
 */
+SELECT COUNT(DISTINCT(linkedin_emp_history.user_id)) AS user_count
+FROM linkedin_emp_history
+JOIN linkedin_users ON linkedin_users.user_id = linkedin_emp_history.user_id
+WHERE LOWER(linkedin_emp_history.employment) IN ('stripe','uber','meta')
+AND linkedin_users.country != 'UK';
