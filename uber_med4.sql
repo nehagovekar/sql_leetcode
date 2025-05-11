@@ -68,3 +68,6 @@ Other	6.67
 Footer
 
 */
+SELECT destination_type, ROUND(COUNT(*)/(SELECT COUNT(*) FROM uber_fct_trips)*100,2) as destination_prcnt FROM uber_fct_trips
+GROUP BY destination_type
+ORDER BY destination_prcnt DESC;
