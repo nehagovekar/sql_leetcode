@@ -30,3 +30,8 @@ start_date	date
 end_date	date
 
 */
+SELECT employment, AVG(DATEDIFF('month',start_date, end_date)) as avg_tenure
+FROM  linkedin_emp_history
+GROUP BY employment
+ORDER BY avg_tenure DESC
+LIMIT 3;
