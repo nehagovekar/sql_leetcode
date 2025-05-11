@@ -33,3 +33,17 @@ last_name	varchar
 has_rented	bigint
 joined_on_date	date
 */
+WITH with_count as (SELECT user_id, COUNT(num_of_nights) as cnt
+--  DENSE_RANK() OVER (PARTITION BY user_id ORDER BY airbnb_fct_rentals DESC) as rnk 
+  FROM airbnb_fct_rentals
+  GROUP BY user_id
+ ),
+ ranking AS (
+  SELECT wc.user_id, wc.cnt, CONCAT(adu.first_name,' ', adu.last_name) as renter_name,
+  DENSE_RANK() OVER (ORDER BY cnt DESC) as rnk 
+  FROM with_count wc
+  JOIN airbnb_dim_users adu 
+  ON wc.user_id = adu.user_id
+)
+SELECT renter_name, cnt AS total_rentals FROM ranking
+  WHERE rnk =1;
