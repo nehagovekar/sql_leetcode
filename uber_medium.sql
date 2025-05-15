@@ -36,3 +36,4 @@ trip_request_at	timestamp
 service_match_time	varchar
 
 */
+SELECT COUNT(CASE WHEN service_match_time='3+min' THEN 1 ELSE NULL END)*100/COUNT(*) as high_wait_time_prcnt FROM uber_fct_trips;
