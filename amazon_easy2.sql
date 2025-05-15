@@ -32,3 +32,11 @@ rating	bigint
 published_at	date
 
 */
+WITH ranking as(SELECT category, product_name, price,
+  RANK() OVER (PARTITION BY category ORDER BY price DESC) as rnk
+FROM amazon_products
+GROUP BY  category,product_name, price)
+SELECT category, product_name, price
+FROM ranking
+WHERE rnk=1
+ORDER BY category ASC, product_name ASC, price ASC;
