@@ -28,3 +28,15 @@ creation_date	timestamp
 post_type	varchar
 
 */
+
+
+SELECT
+  strftime('%Y-%b', creation_date) as mon_yr,
+  COUNT(CASE WHEN post_type='post' THEN 1 ELSE NULL END) as posts,
+  COUNT(CASE WHEN post_type='ad' THEN 1 ELSE NULL END) as ads,
+  COUNT(CASE WHEN post_type='video' THEN 1 ELSE NULL END) as video,
+  COUNT(CASE WHEN post_type='photo' THEN 1 ELSE NULL END) as photos,
+  COUNT(CASE WHEN post_type='poll' THEN 1 ELSE NULL END) as polls
+FROM fb_posts
+WHERE creation_date>='2022-01-01' AND creation_date<'2022-02-01'
+GROUP BY strftime('%Y-%b', creation_date);
