@@ -68,3 +68,6 @@ Uber	14
 Footer
 
 */
+SELECT employment as company,ROUND(AVG(datediff('month',start_date,end_date)),1) as avg_tenure FROM linkedin_emp_history
+  GROUP BY employment
+  ORDER BY employment ASC;
