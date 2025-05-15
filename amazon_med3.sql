@@ -69,3 +69,15 @@ shipping_cost	double
 quantity	bigint
 
 */
+WITH filtered_category AS
+(SELECT at.user_id, ap.category, at.transaction_dt, au.email,
+  RANK() OVER (PARTITION BY at.user_id ORDER BY at.transaction_dt ASC) as rnk 
+  FROM amazon_products ap
+  JOIN amazon_transactions at 
+  ON ap.product_id= at.product_id
+  JOIN amazon_users au 
+  on au.user_id=at.user_id
+  WHERE category in ('clothing','jewelry'))
+SELECT email, date_trunc('day',transaction_dt)  as first_purchase_date from filtered_category
+  where rnk =1
+  ORDER BY first_purchase_date ASC, email ASC;
