@@ -35,3 +35,5 @@ location_town	varchar
 location_country	varchar
 first_listed_on	date
 */
+select COUNT(*) as total_properties from airbnb_dim_property
+  WHERE property_type='poor';
