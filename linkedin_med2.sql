@@ -38,3 +38,10 @@ country	varchar
 joined_dt	date
 account_type	varchar
 */
+with filtered as(SELECT user_id, COUNT(DISTINCT(employment)) as cnt FROM linkedin_emp_history
+GROUP BY user_id)
+SELECT linkedin_users.email FROM filtered
+JOIN linkedin_users
+ON linkedin_users.user_id= filtered.user_id
+WHERE filtered.cnt>2
+ORDER BY linkedin_users.email asc
