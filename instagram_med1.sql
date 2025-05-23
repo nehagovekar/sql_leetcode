@@ -30,3 +30,11 @@ user_id	bigint
 session_ts	timestamp
 session_type	varchar
 */
+SELECT user_id, 
+  date_trunc('day', min(session_ts)) as first_session,
+  datediff('day',CAST('2022-05-26' as date), min(session_ts)) as days_since_first_session
+  FROM ig_user_sessions
+  group by user_id
+  ORDER BY days_since_first_session desc, user_id asc;
+
+
