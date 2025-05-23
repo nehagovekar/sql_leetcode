@@ -28,3 +28,8 @@ country	varchar
 joined_dt	date
 
 */
+with day_between AS
+(SELECT joined_dt,
+  LAG(joined_dt) OVER (ORDER BY joined_dt) AS PREV_DATE
+  from apple_users)
+SELECT ROUND(AVG(DATEDIFF('DAY',PREV_DATE,joined_dt)),2) as avg_days_between_signups FROM day_between;
