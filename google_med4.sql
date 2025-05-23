@@ -37,3 +37,16 @@ video_id	bigint
 reaction_dt	timestamp
 reactions	varchar
 */
+
+
+with filtered AS
+  (SELECT category, video_title, count(youtube_reactions.video_id) as cnt from youtube_videos
+  LEFT JOIN (SELECT video_id from youtube_reactions where reactions in ('like','comment')) as youtube_reactions
+  ON youtube_videos.video_id= youtube_reactions.video_id
+  GROUP BY category, video_title)
+SELECT category, ROUND(AVG(cnt),2) AS no_reaction_rate
+FROM filtered
+GROUP BY category
+ORDER BY category;
+
+
