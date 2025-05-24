@@ -177,3 +177,12 @@ VReynolds0@hotmail.com	1397.04
 WSims6@hotmail.com	0
 Footer
 */
+
+SELECT au.email, COALESCE(ROUND(AVG(at.quantity*ap.price + at.shipping_cost),2),0) AS total_amount
+FROM amazon_products ap 
+JOIN amazon_transactions at 
+ON at.product_id = ap.product_id
+RIGHT JOIN amazon_users au 
+ON au.user_id = at.user_id
+GROUP BY au.email
+ORDER BY au.email;
