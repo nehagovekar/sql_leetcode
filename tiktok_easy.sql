@@ -50,3 +50,5 @@ The latest news, articles, and resources, sent to your inbox weekly.
 
 Email address
 */
+
+  SELECT COUNT(CASE WHEN viewed_to_completion=1 THEN 1 ELSE NULL END)*100/(COUNT(*) ) AS full_view_rate FROM tiktok_fct_views;
