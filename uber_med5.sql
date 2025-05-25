@@ -69,3 +69,14 @@ Query Output: (564ms)
 Code SQL queries above and run them to see results in real time.
 
 */
+WITH ride_days AS
+(
+  SELECT rider_id,
+  datetrunc('day',trip_request_at) as current_trip,
+  LEAD(datetrunc('day',trip_request_at)) OVER (PARTITION BY rider_id ORDER BY trip_request_at) as next_ride
+  FROM uber_fct_trips
+  
+)
+
+SELECT ROUND(AVG(DATEDIFF('day',next_ride, current_trip)),2) as days_between_rides FROM ride_days
+WHERE next_ride is not null;
