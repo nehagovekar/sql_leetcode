@@ -52,3 +52,8 @@ device	varchar
 rating	double
 
 */
+
+SELECT app_name, ROUND(avg(rating),2) as avg_rating , ROUND(avg(price),2) as avg_price
+FROM appstore_transactions
+GROUP BY app_name
+ORDER BY app_name ASC;
