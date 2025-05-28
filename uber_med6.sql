@@ -25,3 +25,6 @@ uber_refunds
 trip_id	bigint
 refund_reason	varchar
 */
+SELECT  refund_reason, ROUND(COUNT(trip_id)*100/(SELECT COUNT(*) FROM uber_refunds),2) AS refund_type_rate FROM uber_refunds
+GROUP BY refund_reason
+ORDER BY refund_type_rate desc, refund_reason asc;
