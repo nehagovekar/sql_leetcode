@@ -36,3 +36,12 @@ is_verified	boolean
 requires_accomodations	bigint
 
 */
+WITH CANCEL_COUNT AS (
+SELECT rider_id, count(cancelled_at) as cnt,
+RANK() OVER (ORDER BY count(cancelled_at) DESC) as rnk
+FROM uber_cancels
+GROUP BY rider_id)
+SELECT CONCAT(udu.first_name,' ',udu.last_name) AS rider, cc.cnt as rides_canceled,  cc.rnk  FROM CANCEL_COUNT cc
+JOIN uber_dim_users udu
+ON cc.rider_id= udu.user_id
+WHERE rnk=1;
