@@ -38,3 +38,17 @@ email	varchar
 country	varchar
 signup_dt	timestamp
 */
+
+WITH no_activity AS
+(
+  SELECT user_id FROM google_search_users
+  WHERE user_id not in (SELECT user_id FROM google_search_activity)
+),
+  country_count AS(
+SELECT gsa.user_id, count(gsa.user_id), gsu.country FROM google_search_activity gsa
+  JOIN google_search_users gsu
+  ON gsa.user_id= gsu.user_id
+  GROUP BY gsa.user_id, gsu.country
+  HAVING count(gsa.user_id)=3)
+SELECT COUNT(DISTINCT(no_activity.user_id)) as no_activity,COUNT(DISTINCT(country_count.country)) as active_countries 
+  FROM no_activity, country_count;
