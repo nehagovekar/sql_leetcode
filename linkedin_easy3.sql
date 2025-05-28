@@ -25,3 +25,9 @@ post_date	date
 company_id	bigint
 company	varchar
 */
+
+WITH posts AS(SELECT post_id, count(post_id) as cnt
+FROM linkedin_job_posts
+GROUP BY post_id)
+SELECT COUNT(DISTINCT(post_id)) as num_unique_post from posts
+WHERE cnt=1;
