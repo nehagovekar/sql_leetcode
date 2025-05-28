@@ -49,3 +49,11 @@ reaction_dt	timestamp
 reactions	varchar
 
 */
+
+SELECT DATE_trunc('day',reaction_dt) as reaction_date, reactions as reaction_type,
+COUNT(CASE WHEN reactions='like' THEN 1 ELSE NULL END) AS total_likes,
+COUNT(CASE WHEN reactions='comment' THEN 1 ELSE NULL END) AS total_comments
+FROM youtube_reactions
+WHERE reactions in ('like','comment')
+GROUP BY reaction_date,reactions
+ORDER BY reaction_date ASC, reaction_type ASC;
