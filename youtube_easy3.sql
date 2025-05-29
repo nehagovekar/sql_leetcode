@@ -61,3 +61,10 @@ category	varchar
 published_at	timestamp
 duration_sec	bigint
 */
+SELECT DATETRUNC('day',yr.reaction_dt) as event_date, yv.video_title, COUNT(*) as action_count 
+FROM youtube_reactions yr 
+JOIN youtube_videos yv 
+ON yr.video_id=yv.video_id
+WHERE yr.reactions in ('like', 'comment')
+GROUP BY event_date, yv.video_title, yr.reactions
+ORDER BY event_date ASC;
