@@ -32,3 +32,10 @@ user_id	bigint
 creation_date	timestamp
 post_type	varchar
 */
+
+SELECT YEAR(creation_date) AS poll_year, MONTH(creation_date) AS poll_month, COUNT(CASE WHEN post_type='poll' THEN 1 ELSE NULL END) AS polls 
+FROM fb_posts
+GROUP BY poll_year, poll_month
+HAVING COUNT(CASE WHEN post_type='poll' THEN 1 ELSE NULL END) > 0
+ORDER BY poll_year ASC, poll_month ASC;
+
