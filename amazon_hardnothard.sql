@@ -47,3 +47,14 @@ shipping_cost	double
 quantity	bigint
 
 */
+with selected_users as (SELECT user_id, payment_method, COUNT(payment_method) as payment_counts,
+RANK() OVER (PARTITION BY user_id ORDER BY COUNT(payment_method) DESC) as rnk
+FROM amazon_transactions
+GROUP BY user_id, payment_method
+HAVING payment_counts>2)
+SELECT au.email, su.payment_method, su.payment_counts
+FROM amazon_users au 
+JOIN selected_users su 
+ON au.user_id=su.user_id
+WHERE su.rnk=1
+ORDER BY  su.payment_counts DESC, au.email ASC;
