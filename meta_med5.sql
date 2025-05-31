@@ -24,3 +24,9 @@ user_id	bigint
 action_datetime	timestamp
 reaction_type	varchar
 */
+
+SELECT ROUND
+  ((COUNT(DISTINCT CASE WHEN reaction_type in ('like', 'comment') THEN post_id ELSE NULL END)*100)/
+ (COUNT(DISTINCT(post_id))),2)
+AS like_commnt_rate
+FROM fb_posts_actions;
