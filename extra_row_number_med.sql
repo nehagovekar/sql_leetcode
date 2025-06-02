@@ -32,3 +32,10 @@ email	varchar
 last_updated_on	date
 
 */
+WITH ranked AS(SELECT *,
+  ROW_NUMBER() OVER (PARTITION BY user_id ORDER BY last_updated_on DESC) as rnk
+  FROM duplicated_data)
+SELECT user_id, primary_device, email
+FROM ranked
+WHERE rnk=1
+ORDER BY user_id;
