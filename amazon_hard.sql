@@ -48,3 +48,25 @@ joined_dt	timestamp
 prime_member	bigint
 prime_joined_dt	timestamp
 */
+WITH selected_users AS (SELECT at.product_id, at.transaction_dt, au.prime_joined_dt,  (price * quantity) + shipping_cost total_cost,
+CASE WHEN transaction_dt >= prime_joined_dt THEN 1 ELSE 0 END as is_prime_purchase
+FROM amazon_transactions at
+JOIN amazon_users au
+ON at.user_id=au.user_id
+JOIN amazon_products ap 
+ON ap.product_id= at.product_id),
+post_prime AS
+(SELECT ROUND(AVG(total_cost),2) AS avg_post_prime_spend
+  FROM selected_users
+  WHERE is_prime_purchase=1),
+pre_prime AS
+(SELECT ROUND(AVG(total_cost),2) AS avg_pre_prime_spend
+  FROM selected_users
+  WHERE is_prime_purchase=0)
+SELECT 
+    pre.avg_pre_prime_spend,
+    post.avg_post_prime_spend
+FROM pre_prime pre
+CROSS JOIN post_prime post;
+
+  
