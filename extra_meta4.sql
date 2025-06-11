@@ -45,3 +45,19 @@ ON  r.creator=f.user_id
   WHERE rnk=1
   GROUP BY 1,2
   ORDER BY r.creator asc, f.post_type asc;
+
+  with user_info as (SELECT user_id,COUNT(post_type) AS cnt
+  FROM fb_posts
+  GROUP BY user_id
+  ORDER BY user_id),
+ranking as 
+  (
+  SELECT user_id,
+  DENSE_RANK() OVER (order BY cnt  DESC) as rnk
+  FROM user_info
+  )
+SELECT user_id as creator, post_type, COUNT(post_type) as total_posts FROM fb_posts
+  WHERE user_id in (SELECT user_id from ranking WHERE rnk=1)
+  GROUP BY creator, post_type
+  ORDER BY creator ASC, post_type ASC
+  ;
