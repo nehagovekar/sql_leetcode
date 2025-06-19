@@ -28,3 +28,13 @@ Output:
 total_slack_salary
 INTEGER
 */
+WITH filtered_user_info as 
+(SELECT employee_id, COUNT(project_id) as cnt_project, COUNT(End_dt) as end, End_dt
+FROM projects
+GROUP BY employee_id
+HAVING COUNT(project_id)>=1)
+SELECT SUM(salary) AS total_slack_salary
+FROM employees
+JOIN filtered_user_info
+ON employees.id = filtered_user_info.employee_id
+WHERE end=0 and cnt_project>=1;
