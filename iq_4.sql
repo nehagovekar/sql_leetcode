@@ -27,3 +27,8 @@ membership_start_date	DATETIME
 membership_end_date	DATETIME
 
 */
+select shipment_id, ship_date,shipments.customer_id,
+(CASE WHEN ship_date BETWEEN membership_start_date and membership_end_date THEN 'Y' ELSE 'N' END) 
+AS is_member, quantity from customers
+JOIN shipments
+ON customers.customer_id=shipments.customer_id
