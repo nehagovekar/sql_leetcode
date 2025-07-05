@@ -35,3 +35,13 @@ video_id	bigint
 reaction_dt	timestamp
 reactions	varchar
 */
+WITH like_users AS(
+  SELECT user_id, COUNT(CASE WHEN reactions='like' THEN 1 ELSE NULL END) AS cnt FROM youtube_reactions
+  WHERE user_id in (SELECT user_id 
+  FROM youtube_videos
+  GROUP BY user_id
+  HAVING COUNT(published_at)>=2)
+  GROUP BY user_id
+)
+SELECT user_id from like_users
+  WHERE cnt>=2;
